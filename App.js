@@ -2,13 +2,17 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style = {[styles.textRed, styles.bigText]}>Hello World!</Text>
-      <Button title = {"Click Me!"} onPress = { () => console.log("Button Clicked!")} />
-    </View>
-  );
+export default class App extends React.Component {
+  clickHandler = () => console.log("Clicked!");
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style = {[styles.textRed, styles.bigText]}>Hello World!</Text>
+        <Button title = {"Click Me!"} onPress = {this.clickHandler} />
+      </View>
+    );
+  }
+  
 }
 
 const styles = StyleSheet.create({
