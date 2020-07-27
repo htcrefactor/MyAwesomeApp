@@ -3,11 +3,20 @@ import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default class App extends React.Component {
-  clickHandler = () => console.log("Clicked!");
+  state = { 
+    counter: 0,
+  };
+
+  clickHandler = () => {
+    this.setState({
+      counter: this.state.counter + 1
+    });
+  };
+  
   render() {
     return (
       <View style={styles.container}>
-        <Text style = {[styles.textRed, styles.bigText]}>Hello World!</Text>
+        <Text>Current Count: {this.state.counter}</Text>
         <Button title = {"Click Me!"} onPress = {this.clickHandler} />
       </View>
     );
