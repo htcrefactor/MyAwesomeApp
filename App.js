@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-export default class App extends React.Component {
+class CounterButton extends React.Component {
   state = { 
     counter: 0,
   };
@@ -15,13 +15,22 @@ export default class App extends React.Component {
   
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Text>Current Count: {this.state.counter}</Text>
         <Button title = {"Click Me!"} onPress = {this.clickHandler} />
       </View>
     );
   }
-  
+}
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <View style = {styles.container}>
+        <CounterButton />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
