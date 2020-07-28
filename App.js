@@ -84,7 +84,7 @@ export default class App extends React.Component {
 
   renderItem({ name }) {
     return (
-      <View style={styles.item} key={name}>
+      <View style={styles.item}>
         <Text style={styles.text}>{name}</Text>
       </View>
     );
@@ -94,6 +94,7 @@ export default class App extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <FlatList style={styles.container}
+          keyExtractor={(item) => item.name}
           data={this.fruits}
           renderItem={({ item }) => this.renderItem(item)}
         />
