@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Image, StyleSheet,  ScrollView, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default class App extends React.Component {
@@ -82,7 +82,7 @@ export default class App extends React.Component {
     { name: 'Zucchini' },
   ];
 
-  renderItem({name}) {
+  renderItem({ name }) {
     return (
       <View style={styles.item} key={name}>
         <Text style={styles.text}>{name}</Text>
@@ -93,9 +93,10 @@ export default class App extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.container}>
-          {this.fruits.map(this.renderItem)}
-        </ScrollView>
+        <FlatList style={styles.container}
+          data={this.fruits}
+          renderItem={({ item }) => this.renderItem(item)}
+        />
         <StatusBar style="auto" />
       </SafeAreaView>
     );
