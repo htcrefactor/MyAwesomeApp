@@ -4,16 +4,29 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cities: []
+    };
+  }
+
   componentDidMount() {
     fetch("https://raw.githubusercontent.com/example0312/weather-crawler/master/availableCityNames")
     .then(response => response.json())
-    .then(console.log);
+    .then(cities => {
+      console.log('cities = ', cities.length);
+      this.setState({
+        cities
+      });
+    });
   }
 
-  renderItem({ name }) {
+  renderItem(city) {
     return (
       <View style={styles.item}>
-        <Text style={styles.text}>{name}</Text>
+        <Text style={styles.text}>{city}</Text>
       </View>
     );
   }
@@ -22,9 +35,9 @@ export default class App extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <FlatList style={styles.container}
-          keyExtractor={(item) => item.name}
-          data={this.fruits}
+          keyExtractor={item => item}
           renderItem={({ item }) => this.renderItem(item)}
+          data = {this.state.cities}
         />
         <StatusBar style="auto" />
       </SafeAreaView>
