@@ -14,9 +14,9 @@ const HomeScreen = ({ navigation }) => (
   </View>
 );
 
-const DetailScreen = ({ navigation }) => (
+const DetailScreen = ({ navigation, route }) => (
   <View style={styles.container}>
-    <WeatherDetailScreen navigation={navigation} />
+    <WeatherDetailScreen navigation={navigation} route = {route} />
     <StatusBar style="auto" />
   </View>
 );
