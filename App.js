@@ -37,13 +37,13 @@ export default class App extends React.Component {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{ title: "Cities" }}
+            options={{ title: 'Cities' }}
           />
 
           <Stack.Screen
             name="Detail"
             component={DetailScreen}
-            options={{ title: "Weather" }}
+            options={{ title: 'Weather' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
