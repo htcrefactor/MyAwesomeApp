@@ -7,16 +7,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CityList from './CityList';
 import WeatherDetailScreen from './WeatherDetailScreen';
 
-const HomeScreen = () => (
+const HomeScreen = ({ navigation }) => (
   <View style={styles.container}>
-    <CityList />
+    <CityList navigation={navigation} />
     <StatusBar style="auto" />
   </View>
 );
 
-const DetailScreen = () => (
+const DetailScreen = ({ navigation }) => (
   <View style={styles.container}>
-    <WeatherDetailScreen />
+    <WeatherDetailScreen navigation={navigation} />
     <StatusBar style="auto" />
   </View>
 );
@@ -33,7 +33,7 @@ export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName = "Home">
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
             name="Home"
             component={HomeScreen}
