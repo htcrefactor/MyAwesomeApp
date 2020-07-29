@@ -33,7 +33,7 @@ export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName = "Home">
           <Stack.Screen
             name="Home"
             component={HomeScreen}
