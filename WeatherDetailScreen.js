@@ -1,30 +1,62 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+
+const API_KEY = '6db15c64bb9d142e87b1426c8d6c07a3';
+const queryUrl = (city) => `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
 
 export default class WeatherDetailScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Weather Information',
-  };
+    static navigationOptions = {
+        title: 'Weather Information',
+    };
 
-  render() {
-    const {
-      route: {
-        params: { city },
-      },
-    } = this.props;
+    constructor(props) {
+        super(props);
 
-    console.log('route = ', city);
+        this.state = {
+            isLoading: true,
+        };
+    }
 
-    return (
-      <View style={styles.container}>
-      </View>
-    );
-  }
+    componentDidMount() {
+        const {
+            route: {
+                params: { city },
+            },
+        } = this.props;
+
+        fetch(queryUrl(city))
+            .then(response => response.json())
+            .then(info => {
+                console.log(info);
+                this.setState({
+                    ...info,
+                    isLoading: false
+                });
+            });
+    }
+
+    render() {
+        if (this.state.isLoading) {
+            return (
+                <View style={styles.container}>
+                    <Text>Loading data...</Text>
+                </View>
+            )
+        }
+
+        let celsius = this.state.main.temp - 273.15;
+
+        return (
+            <View style={styles.container}>
+                <Text>Temperature: {celsius.toFixed(1)}</Text>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
 });
