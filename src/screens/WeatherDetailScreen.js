@@ -1,8 +1,8 @@
 import React from 'react';
 import { ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
-// Run npm i --save lodash.get
 import _get from 'lodash.get';
 
 export default class WeatherDetailScreen extends React.Component {
@@ -35,17 +35,62 @@ export default class WeatherDetailScreen extends React.Component {
         )
     }
 
+    renderClouds() {
+        const clouds = _get(this.state, ['clouds', 'all'], null);
+        
+        const cloudStatus = [
+            'Clear',
+            'Partly Cloudy',
+            'Cloudy',
+            'Partly Overcast',
+            'Overcast'
+        ];
+
+        const text = (clouds === null) ? 'Null' : cloudStatus[Math.max(parseInt(clouds / 20), 4)];
+
+        return (
+            <Text>Sky: {text}</Text>
+        );
+    }
+
+    renderWind() {
+        const speed = _get(this.state, ['wind', 'speed'], null);
+        const deg = _get(this.state, ['wind', 'deg'], null);
+
+        const arrowStyle = {
+            transform: [
+                {rotate: `${deg}deg`}
+            ],
+            width: 24,
+            height: 24
+        };
+
+        return (
+            <View style = {[styles.inRow, styles.alignItemInCenter]}>
+                <Text>
+                    Wind Speed: {speed? `${speed}m/s` : `Null`}
+                </Text>
+
+                <View style = {[arrowStyle]}>
+                    <MaterialCommunityIcons name = "arrow-up-circle" size={24} color="black" />
+                </View>
+            </View>
+        );
+    }
+
     renderWeatherCondition() {
         return this.state.weather.map(({
             icon,
+            description,
         }, index) => {
             return (
-                <View key={index}>
+                <View style ={styles.weatherCondition} key={index}>
                     <Image source={{
                         uri: `http://openweathermap.org/img/wn/${icon}@2x.png`,
                         width: 72,
-                        height: 72
+                        height: 48
                     }} />
+                    <Text style = {styles.textCondition}>{description}</Text>
                 </View>
             );
         });
@@ -98,8 +143,10 @@ export default class WeatherDetailScreen extends React.Component {
 
         return (
             <View style={styles.container}>
+                {this.renderClouds()}
                 {this.renderTemperature()}
-                <View style={styles.conditionContainer}>
+                {this.renderWind()}
+                <View style = {styles.inRow}>
                     {this.renderWeatherCondition()}
                 </View>
                 {this.renderGoogleMap()}
@@ -116,8 +163,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
-    conditionContainer: {
+    inRow: {
         flexDirection: 'row'
+    },
+
+    alignItemInCenter: {
+        alignItems: 'center'
     },
 
     mapContainer: {
@@ -128,5 +179,21 @@ const styles = StyleSheet.create({
 
     mapImage: {
         aspectRatio: 1
+    },
+
+    weatherCondition: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20
+    },
+
+    textCondition: {
+        color: '#FFF'
+    },
+
+    rotation: {
+        width: 50,
+        height: 50,
+        transform: [{rotate: "5deg"}]
     }
 });
