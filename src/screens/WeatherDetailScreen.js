@@ -62,6 +62,7 @@ export default class WeatherDetailScreen extends React.Component {
             return undefined;
         }
 
+        // After generating API key, enable billing to activate API.
         const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lon}&markers=color:red%7C${lat},${lon}&zoom=9&size=400x400&maptype=roadmap&key=${googleApiKey}`;
 
         return (
